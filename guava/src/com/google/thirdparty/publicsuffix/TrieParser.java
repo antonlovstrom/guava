@@ -17,8 +17,7 @@ package com.google.thirdparty.publicsuffix;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import java.util.List;
+import com.google.common.collect.Queues;
 import java.util.ArrayDeque;
 
 /** Parser for a map of reversed domain names stored as a serialized radix tree. */
@@ -35,7 +34,7 @@ final class TrieParser {
     int encodedLen = encoded.length();
     int idx = 0;
     while (idx < encodedLen) {
-      idx += doParseTrieToBuilder(new ArrayDeque<CharSequence>(), encoded, idx, builder);
+      idx += doParseTrieToBuilder(Queues.<CharSequence>newArrayDeque(), encoded, idx, builder);
     }
     return builder.build();
   }
